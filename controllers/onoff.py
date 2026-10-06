@@ -16,12 +16,13 @@ class OnOffThermostat:
             If the measured temperature exceeds the safety_high limit, the thermostat turns OFF.
             Returns the current state (0=OFF, 1=ON).
         '''
-        #lower = self.setpoint ... self.deadband ...
-        #upper = self.setpoint ... self.deadband ...
-        #if self.safety_high ... :
-        #    self.state ...
-        #    return self.state
-        #if ...:
-        #    self.state ...
-        #elif ...:
+        lower = self.setpoint - 0.5 * self.deadband
+        upper = self.setpoint + 0.5 * self.deadband
+        if self.safety_high < measured_temp:
+           self.state = 0
+           return self.state
+        if lower > measured_temp:
+           self.state = 1
+        elif upper < measured_temp:
+            self.state = 0
         return self.state
